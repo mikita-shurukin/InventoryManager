@@ -1,0 +1,99 @@
+﻿@model IEnumerable<InventoryManager.DAL.Models.ItemGroup>
+
+<h1>Item Group</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model)
+        {
+            <tr>
+                <td>@group.Id</td>
+                <td id="groupName_@group.Id">@group.Name</td>
+                <td>
+                    <button class="btn btn-primary edit-btn" data-id="@group.Id">Edit</button>
+                    <button class="btn btn-danger delete-btn" data-id="@group.Id">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="/api/ItemGroups/Create" class="btn btn-success">Create Group</a>
+
+<!-- Модальное окно для редактирования -->
+<div class="modal" id="editModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Item Group</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editGroupId">
+                <div class="form-group">
+                    <label for="editGroupName">Name</label>
+                    <input type="text" class="form-control" id="editGroupName">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChangesBtn">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const groupId = this.getAttribute('data-id');
+                const groupName = document.getElementById(`groupName_${groupId}`).textContent;
+
+                // Заполняем значения в модальном окне
+                document.getElementById('editGroupId').value = groupId;
+                document.getElementById('editGroupName').value = groupName;
+
+                // Открываем модальное окно
+                $('#editModal').modal('show');
+            });
+        });
+
+        document.getElementById('saveChangesBtn').addEventListener('click', function () {
+            const groupId = document.getElementById('editGroupId').value;
+            const newName = document.getElementById('editGroupName').value;
+
+            fetch(`/api/ItemGroups/${groupId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    Id: groupId,
+                    Name: newName
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to update item group.');
+                    }
+                    window.location.reload(); // Обновляем страницу после успешного обновления
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            // Закрываем модальное окно
+            $('#editModal').modal('hide');
+        });
+    </script>
+}
