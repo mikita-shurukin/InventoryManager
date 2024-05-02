@@ -1,0 +1,25 @@
+﻿@model IEnumerable<InventoryManager.DAL.Models.Item>
+
+<h1>Items</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Group ID</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.GroupId</td>
+                <td>@item.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="/api/Items/Create" class="btn btn-success">Create new item</a>

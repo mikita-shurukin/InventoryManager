@@ -40,8 +40,9 @@ namespace InventoryManager.ApiControllers
             _context.ItemGroups.Add(itemGroup);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Get)); // Перенаправляем на метод Get
+            return RedirectToAction(nameof(Get));
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

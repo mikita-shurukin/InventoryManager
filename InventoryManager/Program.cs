@@ -1,4 +1,5 @@
 using InventoryManager.DAL;
+using InventoryManager.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,8 +10,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MainDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultMSSQL")));
 
-var app = builder.Build();
+builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 
+
+var app = builder.Build();
 
 
 

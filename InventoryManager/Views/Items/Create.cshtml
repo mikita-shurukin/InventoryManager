@@ -1,0 +1,14 @@
+﻿@model InventoryManager.Models.Requests.CreateItemRequest
+
+<form id="createItemForm" method="post" action="/api/Items/Create">
+    <div class="mt-3">
+        <label class="form-label">GroupId</label>
+        <input type="number" class="form-control" asp-for="GroupId">
+        <label class="form-label">Price</label>
+        <input type="number" class="form-control" asp-for="Price">
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary" id="createBtn">Create</button>
+    </div>
+</form>

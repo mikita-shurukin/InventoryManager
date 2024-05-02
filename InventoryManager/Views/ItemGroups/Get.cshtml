@@ -27,7 +27,6 @@
 
 <a href="/api/ItemGroups/Create" class="btn btn-success">Create Group</a>
 
-<!-- Модальное окно для редактирования -->
 <div class="modal" id="editModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -45,12 +44,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="saveChangesBtn">Save changes</button>
             </div>
         </div>
     </div>
 </div>
+
 
 @section scripts {
     <script>
@@ -59,11 +58,9 @@
                 const groupId = this.getAttribute('data-id');
                 const groupName = document.getElementById(`groupName_${groupId}`).textContent;
 
-                // Заполняем значения в модальном окне
                 document.getElementById('editGroupId').value = groupId;
                 document.getElementById('editGroupName').value = groupName;
 
-                // Открываем модальное окно
                 $('#editModal').modal('show');
             });
         });
@@ -86,14 +83,22 @@
                     if (!response.ok) {
                         throw new Error('Failed to update item group.');
                     }
-                    window.location.reload(); // Обновляем страницу после успешного обновления
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
 
-            // Закрываем модальное окно
             $('#editModal').modal('hide');
         });
+
+        document.querySelectorAll('.close').forEach(closeButton => {
+            closeButton.addEventListener('click', function () {
+                const modal = document.getElementById('editModal');
+                modal.style.display = 'none';
+                window.location.reload();
+            });
+        });
+
     </script>
 }
