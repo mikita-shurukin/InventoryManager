@@ -1,4 +1,4 @@
-﻿namespace InventoryManager.Models.Requests
+﻿namespace InventoryManager.Models.Requests.Item
 {
     public class CreateItemRequest
     {

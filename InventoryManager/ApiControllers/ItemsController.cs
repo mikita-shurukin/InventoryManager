@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using InventoryManager.DAL;
 using InventoryManager.DAL.Models;
-using InventoryManager.Models.Requests;
+using InventoryManager.Models.Requests.Item;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,7 +23,7 @@ namespace InventoryManager.ApiControllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var item = await _context.Items.AsNoTracking().ToListAsync();
+            var item = await _context.Items.Include(i=>i.Group).AsNoTracking().ToListAsync();
             return View(item);
         }
 

@@ -1,5 +1,7 @@
-﻿using InventoryManager.DAL;
+﻿using AutoMapper;
+using InventoryManager.DAL;
 using InventoryManager.DAL.Models;
+using InventoryManager.Models.Requests.ItemGroup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +12,12 @@ namespace InventoryManager.ApiControllers
     public class ItemGroupsController : Controller
     {
         private readonly MainDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ItemGroupsController(MainDbContext context)
+        public ItemGroupsController(MainDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -30,17 +34,14 @@ namespace InventoryManager.ApiControllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody] ItemGroup itemGroup)
+        public async Task<IActionResult> Create([FromForm] CreateItemGroupRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var newItemGroup = _mapper.Map<ItemGroup>(request);
+            _context.ItemGroups.Add(newItemGroup);
 
-            _context.ItemGroups.Add(itemGroup);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Get));
+            return Ok();
         }
 
         [HttpDelete("{id}")]

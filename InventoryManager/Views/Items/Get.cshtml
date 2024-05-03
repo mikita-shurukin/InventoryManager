@@ -6,7 +6,7 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Group ID</th>
+            <th>Group Name</th> <!-- Изменено на Group Name -->
             <th>Price</th>
         </tr>
     </thead>
@@ -15,10 +15,11 @@
         {
             <tr>
                 <td>@item.Id</td>
-                <td>@item.GroupId</td>
+                <td>@(item.Group != null ? item.Group.Name : "N/A")</td> <!-- Добавлена проверка на null -->
                 <td>@item.Price</td>
             </tr>
         }
+
     </tbody>
 </table>
 
