@@ -9,6 +9,7 @@ namespace InventoryManager.DAL.Models
         [Required]
         public int GroupId { get; set; }
         public virtual ItemGroup Group { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [Precision(18, 2)]

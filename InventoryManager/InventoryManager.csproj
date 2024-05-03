@@ -19,9 +19,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Requests\Warehouse\" />
-    <Folder Include="Models\Requests\Order\" />
-  </ItemGroup>
-
 </Project>

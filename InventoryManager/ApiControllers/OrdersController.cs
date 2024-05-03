@@ -1,12 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using InventoryManager.DAL;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManager.ApiControllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class OrdersController : Controller
     {
-        public IActionResult Index()
+        private readonly MainDbContext _context;
+        private readonly IMapper _mapper;
+
+        public OrdersController(MainDbContext context, IMapper mapper)
         {
-            return View();
+            _context = context;
+            _mapper = mapper;
         }
     }
 }

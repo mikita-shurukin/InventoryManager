@@ -6,8 +6,10 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Group Name</th> <!-- Изменено на Group Name -->
+            <th>Group Name</th>
+            <th>Name</th>
             <th>Price</th>
+            <th>Action</th> <!-- Добавлен столбец для действия -->
         </tr>
     </thead>
     <tbody>
@@ -15,12 +17,15 @@
         {
             <tr>
                 <td>@item.Id</td>
-                <td>@(item.Group != null ? item.Group.Name : "N/A")</td> <!-- Добавлена проверка на null -->
+                <td>@(item.Group?.Name ?? "N/A")</td> <!-- Используем оператор ?. и ?? для более краткой проверки -->
+                <td>@(item.Name ?? "N/A")</td>
                 <td>@item.Price</td>
+                <td>
+                    <a href="/api/Items/Update/@item.Id" class="btn btn-primary">Update</a> <!-- Исправлен класс кнопки -->
+                </td>
             </tr>
         }
-
     </tbody>
 </table>
 
-<a href="/api/Items/Create" class="btn btn-success">Create new item</a>
+<a href="/api/Items/Create" class="btn btn-success">Create New Item</a> <!-- Изменен текст кнопки для улучшения читаемости -->

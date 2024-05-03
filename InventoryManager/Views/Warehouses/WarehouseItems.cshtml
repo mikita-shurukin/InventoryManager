@@ -1,0 +1,24 @@
+﻿@model IEnumerable<InventoryManager.DAL.Models.InventoryItem>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Item.Id</td>
+                <td>@item.Item.Name</td>
+                <td>@item.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="/api/Warehouses/AddItems" class="btn btn-success">Add new item</a>
+

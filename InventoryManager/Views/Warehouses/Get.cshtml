@@ -1,0 +1,29 @@
+﻿@model IEnumerable<InventoryManager.DAL.Models.Warehouse>
+
+<h1>Warehouses</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Storage Location</th>
+            <th>Contact Person</th>
+            <th>Items</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var warehouse in Model)
+        {
+            <tr>
+                <td>@warehouse.Id</td>
+                <td>@warehouse.Name</td>
+                <td>@warehouse.StorageLocation</td>
+                <td>@warehouse.ContactPerson</td>
+                <td><a href="/api/Warehouses/@warehouse.Id/ShowItems" class="btn btn-primary">Show Items</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="/api/Warehouses/Create" class="btn btn-success">Create Warehouse</a>

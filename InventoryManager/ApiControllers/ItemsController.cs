@@ -44,5 +44,40 @@ namespace InventoryManager.ApiControllers
 
             return Ok();
         }
+
+        [HttpGet("Update/{id}")]
+        public async Task<IActionResult> Update(int id)
+        {
+            var item = await _context.Items.FindAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            var updateItemRequest = new UpdateItemRequest
+            {
+                Name = item.Name,
+                Price = item.Price
+            };
+            return View(updateItemRequest);
+        }
+
+        [HttpPost("Update/{id}")]
+        public async Task<IActionResult> Update(int id, [FromForm] UpdateItemRequest request)
+        {
+            if (id != request.Id)
+            {
+                return BadRequest();
+            }
+            var item = await _context.Items.FindAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            item.Name = request.Name;
+            item.Price = request.Price;
+            _context.Entry(item).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Get));
+        }
     }
 }
